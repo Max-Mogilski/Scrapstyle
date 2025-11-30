@@ -1,6 +1,8 @@
 <div align="center">
 
-# 🎨 Scrape Style
+<img src="public/logo.svg" alt="Scrape Style Logo" width="80" height="80" />
+
+# Scrape Style
 
 **Paste a URL. Get a design system.**
 
