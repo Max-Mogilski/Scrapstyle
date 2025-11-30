@@ -1,36 +1,123 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+<div align="center">
 
-## Getting Started
+# 🎨 Scrape Style
 
-First, run the development server:
+**Paste a URL. Get a design system.**
+
+Generate AI-ready style guides for [Cursor](https://cursor.com) & [Lovable](https://lovable.dev) in seconds.
+
+[![MIT License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![GitHub Stars](https://img.shields.io/github/stars/Max-Mogilski/Scrapstyle?style=social)](https://github.com/Max-Mogilski/Scrapstyle)
+
+[Live Demo](https://scrapestyle.com) · [Report Bug](https://github.com/Max-Mogilski/Scrapstyle/issues) · [Request Feature](https://github.com/Max-Mogilski/Scrapstyle/issues)
+
+</div>
+
+---
+
+## 🎬 Demo
+
+https://github.com/user-attachments/assets/YOUR_VIDEO_ID_HERE
+
+> 👆 Replace with your video URL after uploading to GitHub
+
+---
+
+## ✨ Features
+
+- 🔗 **Paste any URL** — Works with any public website
+- 🎨 **Extract design tokens** — Colors, typography, spacing, shadows
+- 🤖 **AI-powered analysis** — Uses Gemini to understand design patterns
+- 📋 **Copy & paste ready** — Markdown format perfect for AI coding tools
+- 🔒 **Privacy first** — Your API key stays in your browser
+- 💯 **Free & open source** — MIT licensed
+
+---
+
+## 🚀 Quick Start
+
+### Use Online
+
+1. Go to [scrapestyle.com](https://scrapestyle.com)
+2. Get your free [Gemini API key](https://aistudio.google.com/app/apikey)
+3. Paste a URL and generate!
+
+### Run Locally
 
 ```bash
+# Clone the repo
+git clone https://github.com/Max-Mogilski/Scrapstyle.git
+cd Scrapstyle
+
+# Install dependencies
+npm install
+
+# Run the development server
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 🛠️ Tech Stack
 
-## Learn More
+- **Framework:** [Next.js 15](https://nextjs.org/) (App Router)
+- **Styling:** [Tailwind CSS](https://tailwindcss.com/)
+- **AI:** [Google Gemini](https://ai.google.dev/)
+- **Browser Automation:** [Puppeteer](https://pptr.dev/)
+- **Deployment:** [Vercel](https://vercel.com/)
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 📁 Project Structure
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```
+app/
+├── api/scrape/          # API route for scraping
+│   └── lib/
+│       ├── browser/     # Puppeteer logic
+│       └── prompt/      # AI prompt templates
+├── components/          # React components
+├── config/              # Site configuration
+└── lib/                 # Utility functions
+```
 
-## Deploy on Vercel
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 🤝 Contributing
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Contributions are welcome! Feel free to:
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+---
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+---
+
+## 💖 Support
+
+If you find this project useful, consider:
+
+- ⭐ Starring the repo
+- ☕ [Buying me a coffee](https://buymeacoffee.com/maxuuu)
+
+---
+
+<div align="center">
+
+Made with ❤️ by [Max Mogilski](https://www.max-mogilski.com/)
+
+[![Website](https://img.shields.io/badge/Website-000?style=for-the-badge&logo=google-chrome&logoColor=white)](https://www.max-mogilski.com/)
+[![X](https://img.shields.io/badge/X-000?style=for-the-badge&logo=x&logoColor=white)](https://x.com/Maxuuu0)
+[![YouTube](https://img.shields.io/badge/YouTube-FF0000?style=for-the-badge&logo=youtube&logoColor=white)](https://www.youtube.com/@max-mogilski)
+
+</div>
