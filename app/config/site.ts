@@ -2,7 +2,7 @@ export const siteConfig = {
   name: "Scrape Style",
   url: "https://scrapestyle.com",
   description:
-    "Transform any website into a comprehensive design system. Extract colors, typography, spacing, and components instantly.",
+    "Paste a URL, get a design system. Generate AI-ready style guides for Cursor & Lovable in seconds.",
   github: {
     repo: "Max-Mogilski/Scrapstyle",
     url: "https://github.com/Max-Mogilski/Scrapstyle",

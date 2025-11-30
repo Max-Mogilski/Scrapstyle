@@ -14,13 +14,15 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Scrape Style - Create Beautiful Design Systems in Seconds",
+  title: "Scrape Style - AI-Ready Style Guides for Cursor & Lovable",
   description:
-    "Transform any website into a comprehensive design system. Extract colors, typography, spacing, and components instantly.",
+    "Paste a URL, get a design system. Generate AI-ready style guides for Cursor & Lovable in seconds. Free & open source.",
   keywords: [
     "design system",
     "style guide",
-    "web scraper",
+    "Cursor",
+    "Lovable",
+    "AI coding",
     "UI design",
     "design tokens",
   ],
