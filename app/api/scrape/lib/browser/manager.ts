@@ -6,8 +6,8 @@ let browserInstance: Browser | null = null;
 
 const isDev = process.env.NODE_ENV === "development";
 
-const CHROMIUM_URL =
-  "https://github.com/AuliaSab/chromium/raw/main/chromium-v131.0.1-pack.tar";
+const CHROMIUM_PACK_URL =
+  "https://github.com/Sparticuz/chromium/releases/download/v141.0.0/chromium-v141.0.0-pack.x64.tar";
 
 const CHROME_PATHS = {
   darwin: [
@@ -57,7 +57,7 @@ async function getExecutablePath(): Promise<string> {
     }
   }
 
-  return await chromium.executablePath(CHROMIUM_URL);
+  return await chromium.executablePath(CHROMIUM_PACK_URL);
 }
 
 export async function getBrowser(): Promise<Browser> {
