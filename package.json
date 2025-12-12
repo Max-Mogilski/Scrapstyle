@@ -20,7 +20,7 @@
     "cheerio": "^1.1.2",
     "jimp": "^1.6.0",
     "js-cookie": "^3.0.5",
-    "next": "16.0.4",
+    "next": "16.0.10",
     "puppeteer-core": "^24.31.0",
     "react": "19.2.0",
     "react-dom": "19.2.0",
