@@ -28,7 +28,7 @@ Generate AI-ready style guides for [Cursor](https://cursor.com) & [Lovable](http
 
 ## 🎬 Demo
 
-https://github.com/user-attachments/assets/YOUR_VIDEO_ID_HERE
+https://github.com/Max-Mogilski/Scrapstyle/raw/main/docs/demo.mp4
 
 ---
 
