@@ -28,7 +28,10 @@ Generate AI-ready style guides for [Cursor](https://cursor.com) & [Lovable](http
 
 ## 🎬 Demo
 
-https://github.com/Max-Mogilski/Scrapstyle/raw/main/docs/demo.mp4
+
+https://github.com/user-attachments/assets/ec5216da-260c-41c8-9c0c-7c7b1391b276
+
+
 
 ---
 
