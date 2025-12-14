@@ -1,17 +1,29 @@
 "use client";
 
 import { useState } from "react";
-import { setApiKey } from "@/app/lib/storage";
-import { EXTERNAL_LINKS, API_KEY_PREFIX } from "@/app/lib/constants";
+import { setUserConfig } from "@/app/lib/storage";
+import { PROVIDER_COPY, type AIProvider } from "@/app/lib/constants";
 
 interface ApiKeyModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onSubmit: (apiKey: string) => void;
+  onSubmit: (config: { provider: AIProvider; apiKey: string; model?: string }) => void;
+  initialProvider?: AIProvider;
+  initialApiKey?: string;
+  initialModel?: string;
 }
 
-export default function ApiKeyModal({ isOpen, onClose, onSubmit }: ApiKeyModalProps) {
-  const [apiKey, setApiKeyState] = useState("");
+export default function ApiKeyModal({
+  isOpen,
+  onClose,
+  onSubmit,
+  initialProvider = "gemini",
+  initialApiKey = "",
+  initialModel,
+}: ApiKeyModalProps) {
+  const [provider, setProvider] = useState<AIProvider>(initialProvider);
+  const [apiKey, setApiKeyState] = useState(initialApiKey);
+  const [model, setModel] = useState(initialModel || "");
   const [error, setError] = useState("");
 
   if (!isOpen) return null;
@@ -20,20 +32,17 @@ export default function ApiKeyModal({ isOpen, onClose, onSubmit }: ApiKeyModalPr
     e.preventDefault();
 
     const trimmedKey = apiKey.trim();
+    const trimmedModel = model.trim();
 
     if (!trimmedKey) {
       setError("Please enter your API key");
       return;
     }
 
-    if (!trimmedKey.startsWith(API_KEY_PREFIX)) {
-      setError("Invalid API key format");
-      return;
-    }
-
-    setApiKey(trimmedKey);
-    onSubmit(trimmedKey);
+    setUserConfig({ provider, apiKey: trimmedKey, model: trimmedModel || undefined });
+    onSubmit({ provider, apiKey: trimmedKey, model: trimmedModel || undefined });
     setApiKeyState("");
+    setModel("");
     setError("");
   };
 
@@ -52,9 +61,19 @@ export default function ApiKeyModal({ isOpen, onClose, onSubmit }: ApiKeyModalPr
         <ModalHeader onClose={onClose} />
         <ModalContent
           apiKey={apiKey}
+          provider={provider}
+          model={model}
           error={error}
           onApiKeyChange={(value) => {
             setApiKeyState(value);
+            setError("");
+          }}
+          onProviderChange={(value) => {
+            setProvider(value);
+            setError("");
+          }}
+          onModelChange={(value) => {
+            setModel(value);
             setError("");
           }}
           onSubmit={handleSubmit}
@@ -93,47 +112,97 @@ function ModalHeader({ onClose }: { onClose: () => void }) {
 
 interface ModalContentProps {
   apiKey: string;
+  provider: AIProvider;
+  model: string;
   error: string;
   onApiKeyChange: (value: string) => void;
+  onProviderChange: (provider: AIProvider) => void;
+  onModelChange: (value: string) => void;
   onSubmit: (e: React.FormEvent) => void;
   onClose: () => void;
 }
 
-function ModalContent({ apiKey, error, onApiKeyChange, onSubmit, onClose }: ModalContentProps) {
+function ModalContent({
+  apiKey,
+  provider,
+  model,
+  error,
+  onApiKeyChange,
+  onProviderChange,
+  onModelChange,
+  onSubmit,
+  onClose,
+}: ModalContentProps) {
   return (
     <div className="p-6">
       <p className="text-sm text-[var(--color-gray-600)] mb-4 leading-relaxed">
-        This tool is <strong>free & open source</strong>. To keep it running, we use your Gemini API
-        key (it&apos;s free!). We store it <strong>only in your browser</strong> — never on our
-        servers.
+        Keys stay in your browser. Choose your provider and paste the key.
       </p>
 
+      <div className="flex gap-2 mb-4">
+        {(["gemini", "openrouter"] as AIProvider[]).map((p) => (
+          <button
+            key={p}
+            type="button"
+            onClick={() => onProviderChange(p)}
+            className={`flex-1 px-3 py-2 text-sm font-semibold border-2 rounded-lg ${
+              provider === p
+                ? "bg-[var(--color-primary)] text-white border-[var(--color-dark)]"
+                : "bg-white text-[var(--color-dark)] border-[var(--color-gray-300)]"
+            }`}
+          >
+            {PROVIDER_COPY[p].label}
+          </button>
+        ))}
+      </div>
+
       <a
-        href={EXTERNAL_LINKS.geminiApiKey}
+        href={PROVIDER_COPY[provider].link}
         target="_blank"
         rel="noopener noreferrer"
         className="inline-flex items-center gap-2 text-sm font-medium text-[var(--color-primary)] hover:underline mb-5"
       >
         <ExternalLinkIcon />
-        Get your free Gemini API key here
+        {provider === "gemini" ? "Get your free Gemini API key" : "Get your OpenRouter key"}
       </a>
 
       <form onSubmit={onSubmit}>
         <div className="mb-4">
           <label htmlFor="apiKey" className="block text-sm font-medium text-[var(--color-dark)] mb-2">
-            Gemini API Key
+            API Key ({PROVIDER_COPY[provider].label})
           </label>
           <input
             id="apiKey"
             type="password"
             value={apiKey}
             onChange={(e) => onApiKeyChange(e.target.value)}
-            placeholder="AIza..."
+            placeholder={PROVIDER_COPY[provider].placeholder}
             className="w-full px-4 py-3 text-sm bg-white border-2 border-[var(--color-dark)] rounded-lg focus:outline-none placeholder:text-[var(--color-gray-400)] shadow-[var(--shadow-sm)]"
             autoComplete="off"
           />
           {error && <p className="mt-2 text-sm text-[var(--color-accent-red)]">{error}</p>}
         </div>
+
+        {provider === "openrouter" && (
+          <div className="mb-4">
+            <label htmlFor="model" className="block text-sm font-medium text-[var(--color-dark)] mb-2">
+              Model (optional)
+            </label>
+            <input
+              id="model"
+              type="text"
+              value={model}
+              onChange={(e) => onModelChange(e.target.value)}
+              placeholder="gpt-4o-mini"
+              className="w-full px-4 py-3 text-sm bg-white border-2 border-[var(--color-dark)] rounded-lg focus:outline-none placeholder:text-[var(--color-gray-400)] shadow-[var(--shadow-sm)]"
+              autoComplete="off"
+            />
+          </div>
+        )}
+
+        <p className="text-xs text-[var(--color-gray-600)] mb-4">
+          {PROVIDER_COPY[provider].helper}
+        </p>
 
         <div className="flex gap-3">
           <button

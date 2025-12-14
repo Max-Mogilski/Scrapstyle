@@ -2,8 +2,9 @@
 
 import { useState, useEffect, useCallback } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
-import { getApiKey, removeApiKey } from "@/app/lib/storage";
+import { getUserConfig, clearUserConfig, setUserConfig } from "@/app/lib/storage";
 import { scrapeUrl, cleanMarkdown } from "@/app/lib/api";
+import type { AIProvider } from "@/app/lib/constants";
 import DesignSystemLoader from "./DesignSystemLoader";
 import EmptyState from "./EmptyState";
 import StyleGuideViewer from "./StyleGuideViewer";
@@ -15,25 +16,32 @@ export default function ScraperApp() {
   const initialUrl = searchParams.get("url") || "";
 
   const [url, setUrl] = useState(initialUrl);
+  const [config, setConfig] = useState(() => getUserConfig());
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [styleGuide, setStyleGuide] = useState("");
   const [showApiKeyModal, setShowApiKeyModal] = useState(false);
   const [pendingUrl, setPendingUrl] = useState<string | null>(null);
 
-  const processUrl = useCallback(async (targetUrl: string, apiKey: string) => {
+  const processUrl = useCallback(async (targetUrl: string, currentConfig = config) => {
     setLoading(true);
     setError("");
 
     try {
-      const data = await scrapeUrl({ url: targetUrl, apiKey });
+      const data = await scrapeUrl({
+        url: targetUrl,
+        apiKey: currentConfig.apiKey,
+        provider: currentConfig.provider,
+        model: currentConfig.model,
+      });
       setStyleGuide(cleanMarkdown(data.styleGuide));
     } catch (err) {
       const error = err as Error & { status?: number };
 
       if (error.status === 401) {
-        removeApiKey();
-        setError("Invalid API key. Please enter a valid Gemini API key.");
+        clearUserConfig();
+        setConfig(getUserConfig());
+        setError("Invalid API key. Please enter a valid key for the selected provider.");
         setShowApiKeyModal(true);
         setPendingUrl(targetUrl);
         return;
@@ -43,21 +51,19 @@ export default function ScraperApp() {
     } finally {
       setLoading(false);
     }
-  }, []);
+  }, [config]);
 
   const handleProcessRequest = useCallback(
     (targetUrl: string) => {
-      const apiKey = getApiKey();
-
-      if (!apiKey) {
+      if (!config.apiKey) {
         setPendingUrl(targetUrl);
         setShowApiKeyModal(true);
         return;
       }
 
-      processUrl(targetUrl, apiKey);
+      processUrl(targetUrl, config);
     },
-    [processUrl]
+    [processUrl, config]
   );
 
   useEffect(() => {
@@ -80,10 +86,12 @@ export default function ScraperApp() {
     handleProcessRequest(trimmedUrl);
   };
 
-  const handleApiKeySubmit = (apiKey: string) => {
+  const handleApiKeySubmit = (next: { provider: AIProvider; apiKey: string; model?: string }) => {
+    const saved = setUserConfig(next);
+    setConfig(saved);
     setShowApiKeyModal(false);
     if (pendingUrl) {
-      processUrl(pendingUrl, apiKey);
+      processUrl(pendingUrl, saved);
       setPendingUrl(null);
     }
   };
@@ -118,6 +126,9 @@ export default function ScraperApp() {
         isOpen={showApiKeyModal}
         onClose={handleModalClose}
         onSubmit={handleApiKeySubmit}
+        initialProvider={config.provider}
+        initialApiKey={config.apiKey}
+        initialModel={config.model}
       />
     </>
   );

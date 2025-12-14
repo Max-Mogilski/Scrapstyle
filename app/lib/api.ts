@@ -1,6 +1,10 @@
+import type { AIProvider } from "./constants";
+
 export interface ScrapeRequest {
   url: string;
   apiKey: string;
+  provider: AIProvider;
+  model?: string;
 }
 
 export interface ScrapeResponse {

@@ -47,7 +47,8 @@ https://github.com/user-attachments/assets/ec5216da-260c-41c8-9c0c-7c7b1391b276
 
 ## 🚀 Quick Start
 
-**Online:** Go to [scrapestyle.com](https://scrapestyle.com), get a free [Gemini API key](https://aistudio.google.com/app/apikey), paste a URL!
+**Online:** Go to [scrapestyle.com](https://scrapestyle.com), get a free [Gemini API key](https://aistudio.google.com/app/apikey), paste a URL!  
+You can also choose **OpenRouter (OpenAI-compatible)** in the UI and use your `sk-or-...` key (e.g., `gpt-4o-mini`).
 
 **Local:**
 ```bash
