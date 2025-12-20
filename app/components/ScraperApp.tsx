@@ -8,7 +8,9 @@ import type { AIProvider } from "@/app/lib/constants";
 import DesignSystemLoader from "./DesignSystemLoader";
 import EmptyState from "./EmptyState";
 import StyleGuideViewer from "./StyleGuideViewer";
-import ApiKeyModal from "./ApiKeyModal";
+import ApiKeyModal from "./api-key-modal";
+import SettingsModal from "./settings-modal";
+import SettingsButton from "./SettingsButton";
 
 export default function ScraperApp() {
   const searchParams = useSearchParams();
@@ -21,6 +23,7 @@ export default function ScraperApp() {
   const [error, setError] = useState("");
   const [styleGuide, setStyleGuide] = useState("");
   const [showApiKeyModal, setShowApiKeyModal] = useState(false);
+  const [showSettingsModal, setShowSettingsModal] = useState(false);
   const [pendingUrl, setPendingUrl] = useState<string | null>(null);
 
   const processUrl = useCallback(async (targetUrl: string, currentConfig = config) => {
@@ -101,6 +104,12 @@ export default function ScraperApp() {
     setPendingUrl(null);
   };
 
+  const handleSettingsReset = () => {
+    clearUserConfig();
+    setConfig(getUserConfig());
+    setStyleGuide("");
+  };
+
   return (
     <>
       <main className="flex-1 px-6 py-8">
@@ -130,6 +139,17 @@ export default function ScraperApp() {
         initialApiKey={config.apiKey}
         initialModel={config.model}
       />
+
+      <SettingsModal
+        isOpen={showSettingsModal}
+        onClose={() => setShowSettingsModal(false)}
+        config={config}
+        onReset={handleSettingsReset}
+      />
+
+      {config.apiKey && (
+        <SettingsButton onClick={() => setShowSettingsModal(true)} />
+      )}
     </>
   );
 }

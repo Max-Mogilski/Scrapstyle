@@ -29,3 +29,20 @@ export const PROVIDER_COPY: Record<
   },
 };
 
+/**
+ * Popular OpenRouter models as of December 2025
+ * Format: { id: "provider/model-name", label: "Display Name" }
+ */
+export const OPENROUTER_MODELS = [
+  { id: "x-ai/grok-4.1-fast", label: "Grok 4.1 Fast (xAI)" },
+  { id: "anthropic/claude-sonnet-4.5", label: "Claude Sonnet 4.5" },
+  { id: "google/gemini-2.5-flash", label: "Gemini 2.5 Flash" },
+  { id: "openai/gpt-4o", label: "GPT-4o" },
+  { id: "openai/gpt-4o-mini", label: "GPT-4o Mini" },
+  { id: "deepseek/deepseek-v3.2", label: "DeepSeek V3.2" },
+  { id: "meta-llama/llama-3.3-70b-instruct", label: "Llama 3.3 70B" },
+  { id: "x-ai/grok-code-fast-1", label: "Grok Code Fast 1 (xAI)" },
+] as const;
+
+export const CUSTOM_MODEL_VALUE = "__custom__" as const;
+
